@@ -86,16 +86,19 @@ def apply_weighted_prox(x, V, proxf):
         print('V must be square')
         return
     
-    vx = V@x
+    # vx = V@x
+    vx = x
     y = np.zeros((n, 1))
     
     v00 = V[0, 0]
-    y[0, 0] = proxf(vx[0, 0]/v00, t/v00)
+    # y[0, 0] = proxf(vx[0, 0]/v00, t/v00)
+    y[0, 0] = proxf(vx[0, 0], t/v00)
     for i in range(1, n):
-        tmp1 = np.dot(V[i, 0:i-1], y[0:i-1, 0])
+        tmp1 = np.dot(V[i, 0:i], y[0:i, 0])
         vii = V[i, i]
         x_in = vx[i, 0] - tmp1
-        y[i, 0] = proxf(x_in/vii, t/vii)
+        # y[i, 0] = proxf(x_in/vii, t/vii)
+        y[i, 0] = proxf(x_in, t/vii)
 
     return y
 
@@ -122,7 +125,7 @@ def main():
     # first setup the problem
 
     np.random.seed(20240504)
-    n = 10
+    n = 5
     A = np.random.randn(n, n)
 
     x_init = np.random.randn(n, 1)
@@ -135,8 +138,8 @@ def main():
 
     lam = 1
     xstar_cvx = lasso(A, b, lam)
-    xstar_fb = forward_backward(A, b, lam, 1/(beta + 1), 2)
-    xstar_weighted = weighted_forward_backward(A, b, lam, (beta+1)*np.eye(*H.shape), 2)
+    xstar_fb = forward_backward(A, b, lam, 1/(beta + 1), 100)
+    xstar_weighted = weighted_forward_backward(A, b, lam, (beta+1)*np.eye(*H.shape), 100)
 
     obj_val_cvx = 0.5*np.linalg.norm(A@xstar_cvx - b)**2 + lam*np.linalg.norm(xstar_cvx, 1)
     obj_val_fb = 0.5*np.linalg.norm(A@xstar_fb - b)**2 + lam*np.linalg.norm(xstar_fb, 1)
@@ -192,9 +195,10 @@ def main():
     problem.solve()
 
     print(f'the optimal value is || L H || = {problem.value}')
-    # print(f'with L = {L.value}')
+    print(f'with L = {L.value}')
 
-    xstar_weighted_new = weighted_forward_backward(A, b, lam, L.value @ H, 2)
+    # xstar_weighted_new = weighted_forward_backward(A, b, lam, L.value @ H, 2)
+    xstar_weighted_new = weighted_forward_backward(A, b, lam, L.value, 2)
     obj_val_weight_new = 0.5*np.linalg.norm(A@xstar_weighted_new - b)**2 + lam*np.linalg.norm(xstar_weighted_new, 1)
 
     print(f'obj value from weighted with found mx: {obj_val_weight_new}')
