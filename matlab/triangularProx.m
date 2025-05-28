@@ -48,13 +48,22 @@ else
     % for the (1,1) block, we solve x(1) = ( v11 + df )^{-1} y
     %   which is equivalent to      x(1) = ( 1 + 1/v11 df )^{-1} y/v11
 
+    % from stephen
     % x(1) = prox( y(1), V(1,1) ); % OLD convention, where prox(y,t) returned (I + 1/t df)^{-1} y
     % x(1) = prox( y(1)/V(1,1), 1/V(1,1) ); % NEW convention, new "t" is old "1/t"
-    x(1) = prox( y(1), 1 ) / V(1,1); % same thing, maybe more stable?
+    % x(1) = prox( y(1), 1 ) / V(1,1); % same thing, maybe more stable?
+    
+    % i think we want this
+    x(1) = prox( y(1) / V(1,1), 1 / V(1,1) ); % same thing, maybe more stable?
 
     for i = 2:n
+        % from stephen
         %     x(i) = prox( y(i) - V(i,1:(i-1))*x(1:(i-1)), V(i,i) ); % OLD convention
         %     x(i) = prox( ( y(i) - V(i,1:(i-1))*x(1:(i-1)) )/V(i,i), 1/V(i,i) ); % NEW
-        x(i) = prox( y(i) - V(i,1:(i-1))*x(1:(i-1)) , 1 )/V(i,i); % NEW (but more stable??)
+        % x(i) = prox( y(i) - V(i,1:(i-1))*x(1:(i-1)) , 1 )/V(i,i); % NEW (but more stable??)
+
+        % from alex
+        % i think we want this
+        x(i) = prox( (y(i) - V(i,1:(i-1))*x(1:(i-1)))/ V(i, i) , 1 / V(i, i) ); % NEW (but more stable??)
     end
 end

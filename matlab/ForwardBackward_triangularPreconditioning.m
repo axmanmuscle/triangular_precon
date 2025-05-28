@@ -2,7 +2,7 @@
 % Solve min_x f(x), specifically for f(x) = ||x||_1
 
 rng(1);
-n   = 10;
+n   = 3;
 x0  = 20*randn(n,1);
 xStar = zeros(n,1); % this minimizes ||x||_1
 style = 4;
@@ -88,8 +88,8 @@ cvx_begin
     minimize sum_square( A*xStar - b )/2 + lambda*norm(xStar,1)
 cvx_end
 
-x0  = 20*randn(n,1);
-
+% x0  = 20*randn(n,1);
+% 
 fStar   = sum_square( A*xStar - b )/2 + lambda*norm(xStar,1);
 errFcn  = @(x) norm(x-xStar)/norm(xStar);
 objFcn  = @(x) norm(A*x-b)^2/2 + lambda*norm(x,1);
