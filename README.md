@@ -13,3 +13,17 @@ For the code, start with:
  - then when you change the entries
  - then fully triangular
 
+
+## Math
+Let $\mathcal{H}$ be a Hilbert space. We are focusing on the monotone inclusion problem
+$$
+0 \in Tx
+$$
+where $T : \mathcal{H} \to 2^{\mathcal{H}}$ is a monotone operator (usually maximally monotone). Let $V$ be another operator on $\mathcal{H}$, then we can write the above inclusion as
+$$
+Vx \in Vx + Tx
+$$
+or
+$$
+Vx \in (V + T)x.
+$$

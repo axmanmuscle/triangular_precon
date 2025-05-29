@@ -44,38 +44,42 @@ def prox_point(x0, prox, nmax = 50, tol = 1e-4):
 
     t = 0.5
     xi = x0
-    for _ in range(nmax):
+    for i in range(nmax):
         xip1 = np.zeros(xi.shape)
         for j in range(xi.shape[0]):
             xip1[j, 0] = prox(xi[j, 0], t)
         if np.linalg.norm(xip1 - xi) < tol:
+            print(f'prox converged after {i} iterations')
+            print(xip1)
             return xip1
         
-        print(xip1)
+        # print(xip1)
         xi = xip1
-
+    print(xi)
     return xi
 
 def weighted_prox_point(x0, prox, nmax = 50, tol = 1e-4):
 
     xi = x0
-    V = np.array([[10, 0], [1, 10]])
+    V = np.array([[0.1, 0], [0.001, 0.1]])
     # V = np.eye(2, 2)
-    for _ in range(nmax):
+    for i in range(nmax):
         xip1 = prox(xi, V)
         if np.linalg.norm(xip1 - xi) < tol:
+            print(f'weighted prox converged after {i} iterations')
+            print(xip1)
             return xip1
         
-        print(xip1)
+        # print(xip1)
         xi = xip1
-
+    print(xi)
     return xi
 
 def main():
     x1 = 5
     x2 = -10
 
-    nmax = 3
+    nmax = 1000
     x0 = np.array([[x1], [x2]])
 
     xstar = prox_point(x0, proxf, nmax)
