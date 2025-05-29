@@ -16,17 +16,10 @@ For the code, start with:
 
 ## Math
 Let $\mathcal{H}$ be a Hilbert space. We are focusing on the monotone inclusion problem
-$
-0 \in Tx
-$
+$$0 \in Tx$$
 where $T : \mathcal{H} \to 2^{\mathcal{H}}$ is a monotone operator (usually maximally monotone). Let $V$ be another operator on $\mathcal{H}$, then we can write the above inclusion as
-$
-Vx \in Vx + Tx
-$
+$Vx \in Vx + Tx$
 or
-$
-Vx \in (V + T)x.
-$
-
+$Vx \in (V + T)x.$
 
 Need to code up a nontrivial problem that proximal point will work for (where the solution isn't just zero) to test this and check what matrices work
