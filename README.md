@@ -23,3 +23,8 @@ or
 $Vx \in (V + T)x.$
 
 Need to code up a nontrivial problem that proximal point will work for (where the solution isn't just zero) to test this and check what matrices work
+
+## Test Problem
+Let's do a least squares problem so we can do a nontrivial minimization just using proximal point.
+
+Let $f(x) = \lVert Ax - b \rVert_2^2$. evidently $\nabla f(x) = 2A^T(Ax - b)$ so we could compare to gradient descent. The prox operator will be $\text{prox}_{\lambda f}(x) = \left(AA^T + \frac{1}{\lambda}I\right)^1\left(A^Tb + \frac{1}{\lambda}x\right)$. Code this up and gen a random A and b.
