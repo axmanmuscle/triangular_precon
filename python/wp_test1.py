@@ -12,7 +12,7 @@ import numpy as np
 def f1(x): 
     return np.abs(x)
 
-def apply_weighted_prox(x, V):
+def apply_weighted_prox(x, V, prox):
     """
     This is going to have a lower triangular matrix V and a diagonal matrix of the prox operators
     and solve the system using forward substitution
@@ -27,12 +27,12 @@ def apply_weighted_prox(x, V):
     y = np.zeros((n, 1))
     
     v00 = V[0, 0]
-    y[0, 0] = proxf(vx[0, 0] / v00, t/v00)
+    y[0, 0] = prox(vx[0, 0] / v00, t/v00)
     for i in range(1, n):
         tmp1 = np.dot(V[i, 0:i-1], y[0:i-1, 0])
         vii = V[i, i]
         x_in = vx[i, 0] - tmp1
-        y[i, 0] = proxf(x_in/vii, t/vii)
+        y[i, 0] = prox(x_in/vii, t/vii)
 
     return y
 
@@ -85,7 +85,9 @@ def main():
     xstar = prox_point(x0, proxf, nmax)
     print('*'*15)
 
-    xstar2 = weighted_prox_point(x0, apply_weighted_prox, nmax)
+    wp = lambda x, V: apply_weighted_prox(x, V, proxf)
+
+    xstar2 = weighted_prox_point(x0, wp, nmax)
 
     return 0
 

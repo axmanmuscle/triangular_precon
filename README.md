@@ -28,3 +28,6 @@ Need to code up a nontrivial problem that proximal point will work for (where th
 Let's do a least squares problem so we can do a nontrivial minimization just using proximal point.
 
 Let $f(x) = \lVert Ax - b \rVert_2^2$. evidently $\nabla f(x) = 2A^T(Ax - b)$ so we could compare to gradient descent. The prox operator will be $\text{prox}_{\lambda f}(x) = \left(AA^T + \frac{1}{\lambda}I\right)^1\left(A^Tb + \frac{1}{\lambda}x\right)$. Code this up and gen a random A and b.
+
+## 6/1
+Started adding the test problems from Parente et al. which are useful problems for PPA. This is in wp_test2.m. Make sure that proximal point converges to something like a minimum and then you (maybe) have test problems
