@@ -21,6 +21,8 @@ where $T : \mathcal{H} \to 2^{\mathcal{H}}$ is a monotone operator (usually maxi
 $Vx \in Vx + Tx$
 or
 $Vx \in (V + T)x.$
+The resolvent is 
+If $V$ is invertible this is $x \in (I + V^{-1}T) 
 
 Need to code up a nontrivial problem that proximal point will work for (where the solution isn't just zero) to test this and check what matrices work
 
@@ -31,3 +33,4 @@ Let $f(x) = \lVert Ax - b \rVert_2^2$. evidently $\nabla f(x) = 2A^T(Ax - b)$ so
 
 ## 6/1
 Started adding the test problems from Parente et al. which are useful problems for PPA. This is in wp_test2.m. Make sure that proximal point converges to something like a minimum and then you (maybe) have test problems
+
