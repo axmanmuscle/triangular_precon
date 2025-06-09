@@ -2,7 +2,7 @@
 % Solve min_x f(x), specifically for f(x) = ||x||_1
 
 rng(1);
-n   = 3;
+n   = 10;
 x0  = 20*randn(n,1);
 xStar = zeros(n,1); % this minimizes ||x||_1
 style = 4;
@@ -13,10 +13,10 @@ switch style
         V = diag(rand(n,1)); str = 'Diagonal (and pos def)';
     case 3
         % Our theory does NOT cover this case!
-        V = randn(n); V = .1*V*V' + .1*eye(n);
+        V = randn(n); V = .1*(V*V') + .1*eye(n);
         V = tril(V); str = 'Lower triangular (and pos def)';
     case 4
-        V = randn(n); V = .1*V*V' + .1*eye(n);
+        V = randn(n); V = .1*(V*V') + .1*eye(n);
         V = tril(V); 
         V = inv(tril(max(.01,inv(V)))); % make inv(V) >= 0
         str = 'Lower triangular, and inverse non-negative (and pos def)';
