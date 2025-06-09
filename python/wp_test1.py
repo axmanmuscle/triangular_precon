@@ -8,6 +8,7 @@ Let V be a positive definite lower triangular matrix. Then we want to investigat
 """
 
 import numpy as np
+import scipy.io as sio
 
 def f1(x): 
     return np.abs(x)
@@ -17,7 +18,7 @@ def apply_weighted_prox(x, V, prox):
     This is going to have a lower triangular matrix V and a diagonal matrix of the prox operators
     and solve the system using forward substitution
     """
-    t = 0.5
+    t = 1
     n = V.shape[0]
     if V.shape[1] != n:
         print('V must be square')
@@ -29,7 +30,7 @@ def apply_weighted_prox(x, V, prox):
     v00 = V[0, 0]
     y[0, 0] = prox(vx[0, 0] / v00, t/v00)
     for i in range(1, n):
-        tmp1 = np.dot(V[i, 0:i-1], y[0:i-1, 0])
+        tmp1 = np.dot(V[i, 0:i], y[0:i, 0])
         vii = V[i, i]
         x_in = vx[i, 0] - tmp1
         y[i, 0] = prox(x_in/vii, t/vii)
@@ -91,5 +92,20 @@ def main():
 
     return 0
 
+def test_matlab():
+    data = sio.loadmat('/mnt/e/triangular_precon/matlab/prox_test.mat')
+    V = data['V']
+    x0 = data['x0']
+    print(f'x0: {x0}')
+
+    print(f'Vx0: {V@x0}')
+
+    test = apply_weighted_prox(x0, V, proxf)
+    x = data['x']
+    print(f'test: {test}')
+    print(f'x: {x}')
+    print(f'norm diff {np.linalg.norm(x - test)}')
+
 if __name__ == "__main__":
-    main()
+    test_matlab()
+    # main()
