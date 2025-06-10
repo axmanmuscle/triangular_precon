@@ -22,7 +22,7 @@ $Vx \in Vx + Tx$
 or
 $Vx \in (V + T)x.$
 The resolvent is 
-If $V$ is invertible this is $x \in (I + V^{-1}T) 
+If $V$ is invertible this is $x \in (I + V^{-1}T)x$
 
 Need to code up a nontrivial problem that proximal point will work for (where the solution isn't just zero) to test this and check what matrices work
 
@@ -33,4 +33,13 @@ Let $f(x) = \lVert Ax - b \rVert_2^2$. evidently $\nabla f(x) = 2A^T(Ax - b)$ so
 
 ## 6/1
 Started adding the test problems from Parente et al. which are useful problems for PPA. This is in wp_test2.m. Make sure that proximal point converges to something like a minimum and then you (maybe) have test problems
+
+## 6/9
+Wrote Douglas Rachford tests. Started moving some stuff into ``utils.py`` so that it's more centralized.
+
+I think I may need to rewrite the apply weighted prox to figure out what to do with a nonunity $t$ value? Or does that not really matter. Think about that.
+
+But since DR is working it's time to test what a good preconditioner looks like. Look at the references Stephen sent:
+ - J. M. Ortega, Numerical Analysis: A Second Course, SIAM, 1990
+ - L. Adams, "M-step preconditioned conjugate gradient methods", SIAM Journal on Scientific and Statistical Computing 1985
 
